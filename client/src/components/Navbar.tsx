@@ -73,10 +73,15 @@ const Navbar: React.FC = () => {
                 <li>Logout</li>
               </NavLink>
             )}
-
-            <NavLink to='/write'>
-              <li>Write</li>
-            </NavLink>
+            {user === null ? (
+              <NavLink to='/login'>
+                <li>Write</li>
+              </NavLink>
+            ) : (
+              <NavLink to='/write'>
+                <li>Write</li>
+              </NavLink>
+            )}
 
             <ul className='flex gap-5'>
               <li>

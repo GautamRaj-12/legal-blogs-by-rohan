@@ -15,6 +15,7 @@ import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
 import { Provider } from 'react-redux';
 import store from './app/store.ts';
+import Write from './pages/Write.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path='/contact' element={<Contact />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
+      <Route path='/write' element={<Write />} />
     </Route>
   )
 );
