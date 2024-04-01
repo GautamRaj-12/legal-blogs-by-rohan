@@ -16,6 +16,7 @@ import Register from './pages/Register.tsx';
 import { Provider } from 'react-redux';
 import store from './app/store.ts';
 import Write from './pages/Write.tsx';
+import SinglePost from './pages/SinglePost.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,12 +27,12 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/write' element={<Write />} />
+      <Route path='/post/:id' element={<SinglePost />} />
     </Route>
   )
 );
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {/* <App /> */}
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
