@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { API_URL } from '../config';
-import { useSelector } from 'react-redux';
-import { RootState } from '@reduxjs/toolkit/query';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { API_URL } from "../config";
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Write = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
   // const [file, setFile] = useState(null);
   const user = useSelector((store: RootState) => store.user.user);
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,11 +42,11 @@ const Write = () => {
   };
   return (
     <>
-      <section className='w-[90%] mx-auto'>
+      <section className="w-[90%] mx-auto">
         {/* {file && (
         <img className='writeImg' src={URL.createObjectURL(file)} alt='' />
       )} */}
-        <form action='' onSubmit={handleSubmit} className='h-[70vh]'>
+        <form action="" onSubmit={handleSubmit} className="h-[70vh]">
           <div>
             {/* <label htmlFor="fileInput">
               <i className="writeIcon fas fa-plus"></i>
@@ -58,47 +58,60 @@ const Write = () => {
               onChange={(e) => setFile(e.target.files[0])}
             /> */}
             <input
-              type='text'
-              placeholder='Title'
-              className='writeInput w-[100%] mb-2 p-2 bg-slate-700'
+              type="text"
+              placeholder="Title"
+              className="writeInput w-[100%] mb-2 p-2 bg-slate-700"
               autoFocus={true}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <div className='flex gap-8 items-center text-2xl'>
-              <div>
+            <div className="flex gap-8 items-center mb-2">
+              <div className="relative">
                 <input
-                  type='checkbox'
-                  name='category-checkbox-law'
-                  id='category-checkbox-law'
-                  className='mr-2 w-4 h-4 accent-slate-500'
+                  type="checkbox"
+                  name="category-checkbox-law"
+                  id="category-checkbox-law"
+                  className="mr-2 w-4 h-4 accent-slate-500 hidden"
                 />
-                <label htmlFor='category-checkbox-law'>Law</label>
+                <label
+                  htmlFor="category-checkbox-law"
+                  className="text-sm bg-slate-500/20 p-2 rounded-sm font-semibold text-[--button-bg-color2] cursor-pointer"
+                >
+                  Law
+                </label>
               </div>
               <div>
                 <input
-                  type='checkbox'
-                  name='category-checkbox-cricket'
-                  id='category-checkbox-cricket'
-                  className='mr-2 w-4 h-4 accent-slate-500'
+                  type="checkbox"
+                  name="category-checkbox-cricket"
+                  id="category-checkbox-cricket"
+                  className="mr-2 w-4 h-4 accent-slate-500 hidden"
                 />
-                <label htmlFor='category-checkbox-cricket'>Cricket</label>
+                <label
+                  htmlFor="category-checkbox-cricket"
+                  className="text-sm bg-slate-500/20 p-2 rounded-sm font-semibold text-[--button-bg-color2] cursor-pointer"
+                >
+                  Cricket
+                </label>
               </div>
               <div>
                 <input
-                  type='checkbox'
-                  name='category-checkbox-administration'
-                  id='category-checkbox-administration'
-                  className='mr-2 w-4 h-4 accent-slate-500'
+                  type="checkbox"
+                  name="category-checkbox-administration"
+                  id="category-checkbox-administration"
+                  className="mr-2 w-4 h-4 accent-slate-500 hidden"
                 />
-                <label htmlFor='category-checkbox-administration'>
+                <label
+                  htmlFor="category-checkbox-administration"
+                  className="text-sm bg-slate-500/20 p-2 rounded-sm font-semibold text-[--button-bg-color2] cursor-pointer"
+                >
                   Administration
                 </label>
               </div>
             </div>
           </div>
-          <ReactQuill theme='snow' value={desc} onChange={setDesc} />
-          <button className='writeSubmit' type='submit'>
+          <ReactQuill theme="snow" value={desc} onChange={setDesc} />
+          <button className="writeSubmit" type="submit">
             Publish
           </button>
         </form>
