@@ -1,11 +1,13 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { API_URL } from '../config';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { API_URL } from "../config";
+import DOMPurify from "dompurify";
+
 const SinglePost = () => {
   let { id } = useParams();
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
   console.log(id);
   useEffect(() => {
     const fetchSinglepost = async () => {
@@ -13,21 +15,22 @@ const SinglePost = () => {
         const res = await axios.get(`${API_URL}/posts/post/${id}`);
         console.log(res?.data);
         setTitle(res?.data?.data?.title);
-        setDesc(res?.data?.data?.desc);
+        const cleanDesc = DOMPurify.sanitize(res?.data?.data?.desc);
+        setDesc(cleanDesc);
       } catch (error) {
-        console.error('Error fetching post:', error);
+        console.error("Error fetching post:", error);
       }
     };
     fetchSinglepost();
   }, [id]);
   return (
     <>
-      <section className='w-[90%] mx-auto mt-8'>
+      <section className="w-[90%] mx-auto mt-8">
         <div>
-          <img src='' alt='' />
+          <img src="" alt="" />
         </div>
-        <h1 className='text-6xl mb-5'>{title}</h1>
-        <p className='text-2xl'>{desc}</p>
+        <h1 className="text-6xl mb-5">{title}</h1>
+        <p className="text-2xl" dangerouslySetInnerHTML={{ __html: desc }}></p>
       </section>
     </>
   );
