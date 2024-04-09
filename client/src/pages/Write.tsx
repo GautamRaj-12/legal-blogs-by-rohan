@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { API_URL } from "../config";
@@ -7,110 +7,73 @@ import { RootState } from "@reduxjs/toolkit/query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Write = () => {
+interface WriteProps {}
+
+const Write: React.FC<WriteProps> = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  // const [file, setFile] = useState(null);
+  const [title, setTitle] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
+  const [coverImage, setCoverImage] = useState<File | null>(null);
   const user = useSelector((store: RootState) => store.user.user);
-  const handleSubmit = async (e: React.FormEvent) => {
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescChange = (value: string) => {
+    setDesc(value);
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setCoverImage(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newPost = {
-      username: user.username,
-      title,
-      desc,
-    };
-    // if (file) {
-    //   const data = new FormData();
-    //   const filename = Date.now() + file.name;
-    //   data.append('name', filename);
-    //   data.append('file', file);
-    //   newPost.photo = filename;
-    //   try {
-    //     await axios.post(`${API_URL}/upload`, data);
-    //   } catch (err) {}
-    // }
+
+    const formData = new FormData();
+    if (coverImage) {
+      formData.append("coverImage", coverImage);
+    }
+    formData.append("title", title);
+    formData.append("desc", desc);
+    formData.append("username", user.username);
+
     try {
-      const res = await axios.post(`${API_URL}/posts/create`, newPost, {
+      const res = await axios.post(`${API_URL}/posts/create`, formData, {
         withCredentials: true,
       });
+
       console.log(res);
       navigate(`/post/${res?.data?.data?._id}`);
     } catch (err) {
       console.log(err);
     }
   };
+
   return (
     <>
       <section className="w-[90%] mx-auto">
-        {/* {file && (
-        <img className='writeImg' src={URL.createObjectURL(file)} alt='' />
-      )} */}
         <form action="" onSubmit={handleSubmit} className="h-[70vh]">
           <div>
-            {/* <label htmlFor="fileInput">
-              <i className="writeIcon fas fa-plus"></i>
-            </label> */}
-            {/* <input
-              type="file"
-              id="fileInput"
-              style={{ display: "none" }}
-              onChange={(e) => setFile(e.target.files[0])}
-            /> */}
             <input
               type="text"
               placeholder="Title"
               className="writeInput w-[100%] mb-2 p-2 bg-slate-700"
               autoFocus={true}
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleTitleChange}
             />
-            <div className="flex gap-8 items-center mb-2">
-              <div className="relative">
-                <input
-                  type="checkbox"
-                  name="category-checkbox-law"
-                  id="category-checkbox-law"
-                  className="mr-2 w-4 h-4 accent-slate-500 hidden"
-                />
-                <label
-                  htmlFor="category-checkbox-law"
-                  className="text-sm bg-slate-500/20 p-2 rounded-sm font-semibold text-[--button-bg-color2] cursor-pointer"
-                >
-                  Law
-                </label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  name="category-checkbox-cricket"
-                  id="category-checkbox-cricket"
-                  className="mr-2 w-4 h-4 accent-slate-500 hidden"
-                />
-                <label
-                  htmlFor="category-checkbox-cricket"
-                  className="text-sm bg-slate-500/20 p-2 rounded-sm font-semibold text-[--button-bg-color2] cursor-pointer"
-                >
-                  Cricket
-                </label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  name="category-checkbox-administration"
-                  id="category-checkbox-administration"
-                  className="mr-2 w-4 h-4 accent-slate-500 hidden"
-                />
-                <label
-                  htmlFor="category-checkbox-administration"
-                  className="text-sm bg-slate-500/20 p-2 rounded-sm font-semibold text-[--button-bg-color2] cursor-pointer"
-                >
-                  Administration
-                </label>
-              </div>
-            </div>
           </div>
-          <ReactQuill theme="snow" value={desc} onChange={setDesc} />
+          <input
+            type="file"
+            accept="image/*"
+            className="mb-2"
+            onChange={handleImageChange}
+          />
+          <ReactQuill theme="snow" value={desc} onChange={handleDescChange} />
           <button className="writeSubmit" type="submit">
             Publish
           </button>
