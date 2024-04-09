@@ -14,6 +14,7 @@ const Write: React.FC<WriteProps> = () => {
   const [title, setTitle] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
   const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); // Add loading state
   const user = useSelector((store: RootState) => store.user.user);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +33,7 @@ const Write: React.FC<WriteProps> = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when form is submitted
 
     const formData = new FormData();
     if (coverImage) {
@@ -50,6 +52,8 @@ const Write: React.FC<WriteProps> = () => {
       navigate(`/post/${res?.data?.data?._id}`);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false); // Set loading to false regardless of success or failure
     }
   };
 
@@ -73,9 +77,18 @@ const Write: React.FC<WriteProps> = () => {
             className="mb-2"
             onChange={handleImageChange}
           />
-          <ReactQuill theme="snow" value={desc} onChange={handleDescChange} />
-          <button className="writeSubmit" type="submit">
-            Publish
+          <ReactQuill
+            theme="snow"
+            value={desc}
+            onChange={handleDescChange}
+            // className="h-[50%]"
+          />
+          <button
+            className="writeSubmit bg-[--button-bg-color] px-2 py-1 font-semibold rounded-sm mt-2"
+            type="submit"
+            disabled={loading} // Disable button while loading
+          >
+            {loading ? "Publishing..." : "Publish"}
           </button>
         </form>
       </section>
