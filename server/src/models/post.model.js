@@ -13,6 +13,7 @@ const postSchema = new mongoose.Schema(
     },
     coverImage: {
       type: String, //cloudinary url
+      required:true,
     },
     username: {
       type: mongoose.Schema.Types.ObjectId,

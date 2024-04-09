@@ -2,22 +2,28 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { Post } from "../models/post.model.js";
+import {uploadOnCloudinary} from "../utils/cloudinary.js"
 
 // Handler for Creating post
 const createPost = asyncHandler(async (req, res) => {
   const { title, desc } = req.body;
+  const coverImageUrl = req.file ? (await uploadOnCloudinary(req.file.path)).url : null;
 
   if (!(title && desc)) {
-    throw new ApiError(400, "user should provide title and discription");
+    throw new ApiError(400, "User should provide title and description");
   }
+
   const newPost = await Post.create({
     title,
     desc,
+    coverImage: coverImageUrl,
     username: req.user?._id,
   });
+
   if (!newPost) {
     throw new ApiError(400, "Post could not be created");
   }
+
   return res
     .status(201)
     .json(new ApiResponse(201, newPost, "Post created successfully"));
