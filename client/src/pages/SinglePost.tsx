@@ -8,6 +8,7 @@ const SinglePost = () => {
   let { id } = useParams();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [coverImageUrl, setCoverImageUrl] = useState("");
   console.log(id);
   useEffect(() => {
     const fetchSinglepost = async () => {
@@ -15,6 +16,7 @@ const SinglePost = () => {
         const res = await axios.get(`${API_URL}/posts/post/${id}`);
         console.log(res?.data);
         setTitle(res?.data?.data?.title);
+        setCoverImageUrl(res?.data?.data?.coverImage);
         const cleanDesc = DOMPurify.sanitize(res?.data?.data?.desc);
         setDesc(cleanDesc);
       } catch (error) {
@@ -26,11 +28,18 @@ const SinglePost = () => {
   return (
     <>
       <section className="w-[90%] mx-auto mt-8">
-        <div>
-          <img src="" alt="" />
+        <div className="mb-6">
+          <img
+            src={coverImageUrl}
+            alt=""
+            className="w-[100%] max-h-96 object-cover aspect-auto"
+          />
         </div>
-        <h1 className="text-6xl mb-5">{title}</h1>
-        <p className="text-2xl" dangerouslySetInnerHTML={{ __html: desc }}></p>
+        <h1 className="text-6xl mb-6 text-center font-semibold">{title}</h1>
+        <p
+          className="text-lg font-medium"
+          dangerouslySetInnerHTML={{ __html: desc }}
+        ></p>
       </section>
     </>
   );
