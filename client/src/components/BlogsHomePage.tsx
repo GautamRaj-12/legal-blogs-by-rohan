@@ -1,76 +1,50 @@
+import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Post from "./Post";
+import axios from "axios";
+import { API_URL } from "../config";
 
-const BlogsHomePage = () => {
+interface PostData {
+  coverImage: string;
+  title: string;
+  createdAt: string;
+}
+
+const BlogsHomePage: React.FC = () => {
+  const [allPosts, setAllPosts] = useState<PostData[]>([]);
+
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      try {
+        const res = await axios.get<{ data: PostData[] }>(
+          `${API_URL}/posts/all-posts`
+        );
+        setAllPosts(res?.data?.data || []);
+      } catch (error) {
+        console.log("Error fetching posts", error);
+      }
+    };
+    fetchAllPosts();
+  }, []);
+
   return (
     <>
       <section className="mt-12">
         <Heading leftProp={"left-[49%]"} />
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mx-auto max-w-[1368px] w-[90%]">
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1682686581264-c47e25e61d95?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1708576085575-0b159cad0948?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
-
-          <Post
-            imgsrc="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            category="Law"
-            blogTitle="Defining Boundaries"
-            date="15-07-2023"
-          />
+          {allPosts.map((post, index) => (
+            <Post
+              key={index}
+              imgsrc={post.coverImage}
+              category=""
+              blogTitle={post.title}
+              date={post.createdAt}
+            />
+          ))}
         </div>
       </section>
     </>
   );
 };
+
 export default BlogsHomePage;
