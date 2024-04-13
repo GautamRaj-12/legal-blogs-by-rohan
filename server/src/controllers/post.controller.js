@@ -3,33 +3,21 @@ import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { Post } from "../models/post.model.js";
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
-import {Category} from "../models/category.model.js"
 
 // Handler for Creating post
 const createPost = asyncHandler(async (req, res) => {
-  const { title, desc ,categories} = req.body;
+  const { title, desc } = req.body;
   const coverImageUrl = req.file ? (await uploadOnCloudinary(req.file.path)).url : null;
 
   if (!(title && desc)) {
     throw new ApiError(400, "User should provide title and description");
   }
 
-  // Convert category names to category IDs
-  const categoryIds = [];
-  for (const categoryName of categories) {
-    let category = await Category.findOne({ category: categoryName });
-    if (!category) {
-      // If category doesn't exist, create it
-      category = await Category.create({ category: categoryName });
-    }
-    categoryIds.push(category._id);
-  }
   const newPost = await Post.create({
     title,
     desc,
     coverImage: coverImageUrl,
     username: req.user?._id,
-    categories:categoryIds,
   });
 
   if (!newPost) {
@@ -43,14 +31,14 @@ const createPost = asyncHandler(async (req, res) => {
 
 // Handler for fetching all posts
 const allPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find().populate('categories');
+  const posts = await Post.find();
   return res.json(new ApiResponse(200, posts, "All posts fetched successfully"));
 });
 
 // Handler for fetching a single post by ID
 const singlePost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
-  const post = await Post.findById(postId).populate('categories');
+  const post = await Post.findById(postId);
   if (!post) {
     throw new ApiError(404, "Post not found");
   }
@@ -60,22 +48,12 @@ const singlePost = asyncHandler(async (req, res) => {
 // Handler for updating a post by ID
 const updatePost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
-  const { title, desc,categories} = req.body;
+  const { title, desc } = req.body;
 
   if (!(title && desc)) {
     throw new ApiError(400, "User should provide title and description");
   }
 
-  // Convert category names to category IDs
-  const categoryIds = [];
-  for (const categoryName of categories) {
-    let category = await Category.findOne({ category: categoryName });
-    if (!category) {
-      // If category doesn't exist, create it
-      category = await Category.create({ category: categoryName });
-    }
-    categoryIds.push(category._id);
-  }
   const post = await Post.findById(postId);
 
   if (!post) {
@@ -89,9 +67,9 @@ const updatePost = asyncHandler(async (req, res) => {
 
   const updatedPost = await Post.findByIdAndUpdate(
     postId,
-    { title, desc,categories:categoryIds },
+    { title, desc },
     { new: true }
-  ).populate('categories');
+  );
 
   if (!updatedPost) {
     throw new ApiError(404, "Post not found");

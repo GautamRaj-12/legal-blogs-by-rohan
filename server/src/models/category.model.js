@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const categorySchema = new mongoose.Schema({
     category:[{
         type:String,
-        enum:["Law","Cricket","Administration"]
+        enum:["Law","Category","Administration"]
     }]
 },{timestamps:true})
 
