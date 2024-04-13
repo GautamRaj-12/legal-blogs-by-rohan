@@ -19,7 +19,7 @@ const Post: React.FC<PostProps> = (props) => {
         />
       </div>
       <p className="category text-[--another-light-color] uppercase font-[Lora] tracking-[1px]"></p>
-      <p className="blog-title font-[Unna] text-2xl font-semibold text-center">
+      <p className="blog-title font-[Lora] text-xl font-semibold text-center">
         {blogTitle.length > 30 ? blogTitle.slice(0, 30) + "..." : blogTitle}
       </p>
       <p className="date tracking-[2px] text-center text-xs">{date}</p>
