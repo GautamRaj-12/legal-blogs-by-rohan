@@ -1,11 +1,11 @@
-import BlogsHomePage from '../components/BlogsHomePage';
-import Pagination from '../components/Pagination';
+import BlogsHomePage from "../components/BlogsHomePage";
+import Pagination from "../components/Pagination";
 
 const Home = () => {
   return (
     <>
       <BlogsHomePage />
-      <Pagination />
+      {/* <Pagination /> */}
     </>
   );
 };
