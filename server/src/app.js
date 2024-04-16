@@ -14,7 +14,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://legal-blogs-by-rohan.vercel.app/",
     credentials: true,
   })
 );
