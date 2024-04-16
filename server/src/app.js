@@ -14,7 +14,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://legal-blogs-by-rohan.vercel.app/",
+    origin: "https://legal-blogs-by-rohan.onrender.com/",
     credentials: true,
   })
 );
