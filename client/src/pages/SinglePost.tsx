@@ -27,7 +27,7 @@ const SinglePost = () => {
   }, [id]);
   return (
     <>
-      <section className="w-[90%] mx-auto mt-8">
+      <section className="w-[90%] mx-auto mt-8 text-[#aaa]">
         <div className="mb-6">
           <img
             src={coverImageUrl}
