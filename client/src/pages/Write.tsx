@@ -3,7 +3,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { API_URL } from "../config";
 import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
+// import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "../app/store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +25,9 @@ const Write: React.FC<WriteProps> = () => {
     const fetchCategories = async () => {
       try {
         const res = await axios.get(`${API_URL}/categories/all-categories`);
-        setCategories(res.data.data.map((category) => category.category[0]));
+        setCategories(
+          res.data.data.map((category: any) => category.category[0])
+        );
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -68,8 +71,9 @@ const Write: React.FC<WriteProps> = () => {
     }
     formData.append("title", title);
     formData.append("desc", desc);
-    formData.append("username", user.username);
-
+    if (user) {
+      formData.append("username", user.username);
+    }
     // Modify data for categories
     // const categoryStrings = selectedCategories.map((category) => category);
     // console.log(categoryStrings);

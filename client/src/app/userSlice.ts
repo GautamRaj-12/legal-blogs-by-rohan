@@ -6,6 +6,7 @@ interface UserState {
 
 interface User {
   // Define your user properties here
+  username: string;
 }
 
 const initialState: UserState = {
@@ -13,7 +14,7 @@ const initialState: UserState = {
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<User | null>) => {

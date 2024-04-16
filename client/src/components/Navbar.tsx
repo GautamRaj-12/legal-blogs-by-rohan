@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
     setNavLink("hidden");
   };
 
-  const user = useSelector((store) => store.user.user);
+  const user = useSelector((store: any) => store.user.user);
   // console.log(user);
 
   const handleLogout = async () => {
