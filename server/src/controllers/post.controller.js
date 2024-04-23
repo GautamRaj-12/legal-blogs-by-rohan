@@ -82,10 +82,10 @@ const updatePost = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Post not found");
   }
 
-  // Check if the authenticated user is the owner of the post
-  if (post.username.toString() !== req.user._id.toString()) {
-    throw new ApiError(403, "Unauthorized to update this post");
-  }
+  // // Check if the authenticated user is the owner of the post
+  // if (post.username.toString() !== req.user._id.toString()) {
+  //   throw new ApiError(403, "Unauthorized to update this post");
+  // }
 
   const updatedPost = await Post.findByIdAndUpdate(
     postId,
