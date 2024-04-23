@@ -11,7 +11,7 @@ import {
 } from "../controllers/post.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
-router.route("/create").post(verifyJWT, upload.single('coverImage'),createPost);
+router.route("/create").post(upload.single('coverImage'),createPost);
 router.route("/all-posts").get(allPosts);
 router.route("/post/:id").get(singlePost);
 router.route("/update/:id").put(verifyJWT, updatePost);
