@@ -1,15 +1,9 @@
 import jwt from "jsonwebtoken";
 import { ApiError } from "../utils/apiError.js";
 import { User } from "../models/user.model.js";
-import cors from 'cors';
 
-const corsOptions = {
-  origin: process.env.CORS_ORIGIN,
-  credentials: true
-};
-export const verifyJWT = async (req, res, next) => {
+export const verifyJWT = async (req, _, next) => {
   try {
-    cors(corsOptions)(req, res, () => {});
     const token =
       req.cookies?.accessToken ||
       req.header("Authorization")?.replace("Bearer ", "");
