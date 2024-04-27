@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
+import Heading from "../components/Heading";
+import Footer from "../components/Footer";
 
 const About = () => {
   return (
     <>
-      <section className="about-me max-w-7xl mx-auto w-[90%] min-h-[80vh]">
-        <h2>About Me</h2>
+      <section className="about-me max-w-7xl mx-auto w-[90%] min-h-[80vh] mb-6">
+        <Heading leftProp="left-[60px]" headingText="About Me" />
         <div className="flex justify-center profile-pic-container mt-12">
           <img
             src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiY0OtbBmFaMgnebwdo7Jcbp_dDasxiON2H6t_rJBMfSDtEm0im58LZGGuwuUlnfg3i_B1tz4i3BWtR2GE9TjLjLoUQlsBqRS7VAJ1IEdLv8YjkaWB9Bhzmpsk075nXaU4/s220/IMG_20220302_175447_455.jpg"
@@ -53,6 +55,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 };
