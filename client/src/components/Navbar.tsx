@@ -84,15 +84,24 @@ const Navbar: React.FC = () => {
             )}
 
             <ul className="flex gap-5">
-              <li>
-                <i className="fa-brands fa-x-twitter"></i>
-              </li>
-              <li>
-                <i className="fa-brands fa-linkedin-in"></i>
-              </li>
-              <li>
-                <i className="fa-brands fa-instagram"></i>
-              </li>
+              <Link to="https://x.com/abdsa017" target="_blank">
+                <li>
+                  <i className="fa-brands fa-x-twitter"></i>
+                </li>
+              </Link>
+              <Link
+                to="https://www.linkedin.com/in/rohan-raj-604342213/"
+                target="_blank"
+              >
+                <li>
+                  <i className="fa-brands fa-linkedin-in"></i>
+                </li>
+              </Link>
+              <Link to="https://www.instagram.com/abd_sa_017/" target="_blank">
+                <li>
+                  <i className="fa-brands fa-instagram"></i>
+                </li>
+              </Link>
             </ul>
           </ul>
           <div className="absolute right-0 mr-2 cursor-pointer menu">
