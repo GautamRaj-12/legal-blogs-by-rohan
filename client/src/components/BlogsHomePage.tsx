@@ -32,7 +32,7 @@ const BlogsHomePage: React.FC = () => {
   return (
     <>
       <section className="mt-12">
-        <Heading leftProp={"left-[49%]"} />
+        <Heading leftProp="left-[30px]" headingText="Posts" />
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mx-auto max-w-[1368px] w-[90%]">
           {allPosts.map((post) => (
             <Link to={`post/${post._id}`} key={post._id}>
