@@ -6,6 +6,11 @@ body{
     max-width: 1312px;
     margin: 0 auto;
 }
+@media screen and (max-width:640px) {
+    body{
+        width: 90%;
+    }
+}
 
 @layer base {
     @font-face {
