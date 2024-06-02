@@ -48,17 +48,17 @@ const Navbar = () => {
             <NavLink to="/">
               <li className="md:pb-0 pb-2 md:border-none border-b-2">Home</li>
             </NavLink>
-            <NavLink to="">
+            <a href="#posts">
               <li className="md:pb-0 pb-2 md:border-none border-b-2">Posts</li>
-            </NavLink>
-            <NavLink to="">
+            </a>
+            <a href="#about">
               <li className="md:pb-0 pb-2 md:border-none border-b-2">About</li>
-            </NavLink>
-            <NavLink to="">
+            </a>
+            <a href="#contact">
               <li className="md:pb-0 pb-2 md:border-none border-b-2">
                 Contact
               </li>
-            </NavLink>
+            </a>
           </ul>
           <ul
             className={`flex md:flex-row flex-col items-center gap-4 md:relative absolute md:top-0 top-80 transition-all duration-500 ${
