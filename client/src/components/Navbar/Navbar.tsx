@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <>
       <header className="pt-4 font-roboto">
-        <nav className="flex justify-between items-center text-dark text-buttonText uppercase border border-dark/25 px-6 py-4 rounded-full">
+        <nav className="flex justify-between items-center text-dark text-buttonText uppercase border border-dark/25 px-6 py-4 rounded-full flex-wrap md:flex-row flex-col gap-6">
           <div>
             <NavLink to="/">
               <img src={logo} alt="Legal blogs by rohan logo" />
@@ -45,7 +45,7 @@ const Navbar = () => {
               <li>Contact</li>
             </NavLink>
           </ul>
-          <ul className="flex items-center gap-4">
+          <ul className="flex items-center gap-4 flex-wrap">
             <img
               src={searchIcon}
               alt="A clickable search icon for searching blog posts"
