@@ -24,6 +24,10 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "OK" });
+});
+
 //routes import
 import userRouter from "./routes/user.routes.js";
 import postRouter from "./routes/post.routes.js";
